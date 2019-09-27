@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment } from "react";
+import styles from "./App.module.scss";
+import { sampleSwimSet } from "./model/swim-set.interfaces";
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className={styles.outer_container}>
+        <h1>{sampleSwimSet.title}</h1>
+        {sampleSwimSet.sets.map(set => (
+          <Fragment>
+            <h2>{set.title}</h2>
+            <div className={styles.set_container}>
+              {set.swims.map(swim => (
+                <Fragment>
+                  <p className={styles.swim}>
+                    {swim.blocks.map((block, index) => (
+                      <Fragment>
+                        {index > 0 && <span> + </span>}
+                        {block.repeat > 1 && (
+                          <Fragment>
+                            <span>{block.repeat}</span>
+                            <span> x </span>
+                          </Fragment>
+                        )}
+                        <span>{block.distance}m</span>
+                        <span> @{block.time}s</span>
+                      </Fragment>
+                    ))}
+                  </p>
+                </Fragment>
+              ))}
+            </div>
+          </Fragment>
+        ))}
+      </div>
     </div>
   );
-}
+};
 
 export default App;
